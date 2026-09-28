@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>AI Summit Registrations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f5f2;--card:#ffffff;--ink:#16161a;--muted:#6b6b76;--line:#e6e4df;
+  --accent:#5b4bff;--accent-soft:#ecebff;--bar-bg:#efeee9;--other:#b9b7c4;
+}
+:root[data-theme="dark"]{
+  --bg:#0f0f13;--card:#18181f;--ink:#f2f2f5;--muted:#9a9aa8;--line:#2a2a34;
+  --accent:#8a7dff;--accent-soft:#25224a;--bar-bg:#23232c;--other:#55535f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:40px 16px 80px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:28px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.02em;margin:6px 0 4px}
+.sub{color:var(--muted);font-size:14px}
+.toggle{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font:500 13px Inter,sans-serif;cursor:pointer;white-space:nowrap}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.stat .n{font-size:clamp(28px,6vw,44px);font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.stat .l{color:var(--muted);font-size:13px;margin-top:2px}
+h2{font-size:17px;font-weight:700;margin:0 0 16px}
+.board{margin-bottom:16px}
+.row{display:grid;grid-template-columns:28px minmax(110px,180px) 1fr 76px;align-items:center;gap:12px;padding:9px 8px;border-radius:10px;cursor:pointer;border:none;background:none;width:100%;text-align:left;color:inherit;font:inherit}
+.row:hover{background:var(--bar-bg)}
+.row.active{background:var(--accent-soft)}
+.rank{color:var(--muted);font-weight:600;font-size:13px;font-variant-numeric:tabular-nums}
+.who{font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar{height:10px;background:var(--bar-bg);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.row.muted .bar i{background:var(--other)}
+.row.muted .who{color:var(--muted)}
+.cnt{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;font-size:15px}
+.cnt small{display:block;color:var(--muted);font-weight:500;font-size:11px}
+.divider{height:1px;background:var(--line);margin:8px 0}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.tools input{flex:1;min-width:200px;padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:14px Inter,sans-serif}
+.tools input:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:9px 14px;font:500 13px Inter,sans-serif;cursor:pointer}
+.group{margin-bottom:14px}
+.ghead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.ghead h3{margin:0;font-size:16px;font-weight:700}
+.ghead span{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+ol.people{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:2px 16px}
+ol.people li{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+ol.people li b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ol.people li em{font-style:normal;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums;flex:none}
+.empty{color:var(--muted);text-align:center;padding:32px}
+footer{color:var(--muted);font-size:12px;margin-top:28px;text-align:center}
+@media (max-width:600px){
+  .stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:span 2}
+  .row{grid-template-columns:22px minmax(0,1fr) 64px;row-gap:6px}
+  .row .bar{grid-column:2/4;grid-row:2}
+  .card{padding:18px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Marblism · AI Summit</div>
+      <h1>Registrations</h1>
+      <div class="sub" id="updated"></div>
+    </div>
+    <button class="toggle" id="theme" type="button">Dark mode</button>
+  </header>
+
+  <section class="stats">
+    <div class="card stat"><div class="n" id="total">0</div><div class="l">Total registrants</div></div>
+    <div class="card stat"><div class="n" id="referred">0</div><div class="l">Referred by a partner</div></div>
+    <div class="card stat"><div class="n" id="partners">0</div><div class="l">Partners with signups</div></div>
+  </section>
+
+  <section class="card board">
+    <h2>Registrants by referrer</h2>
+    <div id="board"></div>
+  </section>
+
+  <div class="tools">
+    <input id="q" type="search" placeholder="Search a name" autocomplete="off">
+    <button class="chip" id="clear" type="button" hidden>Show all referrers</button>
+  </div>
+
+  <section id="list"></section>
+
+  <footer>Names and signup dates only. Contact details are kept private.</footer>
+</div>
+
+<script id="reg-data">window.REG_DATA = {"updated": "2026-09-28", "people": [{"name": "Jeffrey Apple", "ref": "Other", "date": "2026-09-28"}, {"name": "Bhavya Gaur", "ref": "Aprille Franks", "date": "2026-09-28"}, {"name": "Juanita Walker", "ref": "Other", "date": "2026-09-28"}, {"name": "Moe Adams", "ref": "Sherri Parsons", "date": "2026-09-27"}, {"name": "Tameko Colbert", "ref": "Aprille Franks", "date": "2026-09-27"}, {"name": "Cathy Smith", "ref": "Aprille Franks", "date": "2026-09-27"}, {"name": "Deborah Young", "ref": "Aprille Franks", "date": "2026-09-27"}, {"name": "Subrina Parker", "ref": "Aprille Franks", "date": "2026-09-27"}, {"name": "Elaine Wilson", "ref": "Aprille Franks", "date": "2026-09-26"}, {"name": "Erica Battle", "ref": "Aprille Franks", "date": "2026-09-26"}, {"name": "Jennifer Bulgin", "ref": "Aprille Franks", "date": "2026-09-25"}, {"name": "Denise Dennis", "ref": "Aprille Franks", "date": "2026-09-25"}, {"name": "Candice Cherry", "ref": "Aprille Franks", "date": "2026-09-25"}, {"name": "Michelle Edelen", "ref": "Aprille Franks", "date": "2026-09-25"}, {"name": "Christopher Demerson", "ref": "Other", "date": "2026-09-25"}, {"name": "DiVita Henderson", "ref": "Sherri Parsons", "date": "2026-09-25"}, {"name": "Leighanne Turner", "ref": "Other", "date": "2026-09-24"}, {"name": "Moe Sharaf", "ref": "Other", "date": "2026-09-24"}, {"name": "Kahliah Brown", "ref": "Ty Woods", "date": "2026-09-24"}, {"name": "Bisi MacGregor", "ref": "Aprille Franks", "date": "2026-09-24"}, {"name": "Iliana Freire", "ref": "Other", "date": "2026-09-24"}, {"name": "Monique Thomas", "ref": "Ericka James", "date": "2026-09-24"}, {"name": "Charlie Brown", "ref": "Other", "date": "2026-09-24"}, {"name": "Lester Holt", "ref": "Other", "date": "2026-09-23"}, {"name": "M H", "ref": "Aprille Franks", "date": "2026-09-23"}, {"name": "Takima Howze", "ref": "Aprille Franks", "date": "2026-09-23"}, {"name": "Tami Anderson", "ref": "Aprille Franks", "date": "2026-09-23"}, {"name": "Lesley Lane", "ref": "Ericka James", "date": "2026-09-23"}, {"name": "Johnny Duncan", "ref": "Other", "date": "2026-09-23"}, {"name": "Shawn Simmons", "ref": "Ericka James", "date": "2026-09-23"}, {"name": "RW Jones", "ref": "Ericka James", "date": "2026-09-23"}, {"name": "Sandra Wester", "ref": "Ericka James", "date": "2026-09-23"}, {"name": "Darlene Richard", "ref": "Ericka James", "date": "2026-09-23"}, {"name": "Dawn Horns", "ref": "Other", "date": "2026-09-22"}, {"name": "Ann Butler", "ref": "Ericka James", "date": "2026-09-22"}, {"name": "Stevey-Wonderful Legters", "ref": "Ericka James", "date": "2026-09-22"}, {"name": "Ingrid Pickett", "ref": "Aprille Franks", "date": "2026-09-22"}, {"name": "Seth Bales", "ref": "Other", "date": "2026-09-22"}, {"name": "Derris Boomer", "ref": "Other", "date": "2026-09-22"}, {"name": "Eddie OShinski", "ref": "Other", "date": "2026-09-22"}, {"name": "Jared Robinson", "ref": "Other", "date": "2026-09-21"}, {"name": "Lucky Woke", "ref": "Other", "date": "2026-09-21"}, {"name": "Kristi Saucerman", "ref": "Other", "date": "2026-09-21"}, {"name": "Iava", "ref": "Other", "date": "2026-09-21"}, {"name": "Siobhan Middleton", "ref": "Aprille Franks", "date": "2026-09-21"}, {"name": "matthew scott", "ref": "Buffy Payne", "date": "2026-09-21"}, {"name": "Phil Wilson", "ref": "Other", "date": "2026-09-21"}, {"name": "Aletha McManama", "ref": "Ericka James", "date": "2026-09-21"}, {"name": "Marcus Hlophe", "ref": "Other", "date": "2026-09-21"}, {"name": "Johnathan Blackstone", "ref": "Sherri Parsons", "date": "2026-09-21"}, {"name": "Toni Harris Taylor", "ref": "Other", "date": "2026-09-20"}, {"name": "amanda scocozzo", "ref": "Other", "date": "2026-09-20"}, {"name": "Diamond Johnson", "ref": "Other", "date": "2026-09-20"}, {"name": "Mirka Pipova", "ref": "Other", "date": "2026-09-20"}, {"name": "Ronald Washington", "ref": "Sherri Parsons", "date": "2026-09-20"}, {"name": "Muz Syed", "ref": "Other", "date": "2026-09-19"}, {"name": "Basila Muhammad", "ref": "Not specified", "date": "2026-09-19"}, {"name": "Josette Mills", "ref": "Ty Woods", "date": "2026-09-19"}, {"name": "Kesa Johnson", "ref": "Aprille Franks", "date": "2026-09-19"}, {"name": "Kermie Lopez", "ref": "Other", "date": "2026-09-19"}, {"name": "Christine Koenig", "ref": "Other", "date": "2026-09-19"}, {"name": "Raquel Cartagena", "ref": "Other", "date": "2026-09-19"}, {"name": "Samuel Calland", "ref": "Other", "date": "2026-09-19"}, {"name": "Vic Delaet", "ref": "Other", "date": "2026-09-19"}, {"name": "Charles Ridler", "ref": "Other", "date": "2026-09-19"}, {"name": "Lorna Burch", "ref": "Other", "date": "2026-09-19"}, {"name": "Daniel Hancock", "ref": "Not specified", "date": "2026-09-19"}, {"name": "Tiana Long", "ref": "Aprille Franks", "date": "2026-09-19"}, {"name": "Emily Johnson", "ref": "Sherri Parsons", "date": "2026-09-18"}, {"name": "Maryse Montagne", "ref": "Other", "date": "2026-09-18"}, {"name": "Traci Harrell", "ref": "Ericka James", "date": "2026-09-18"}, {"name": "Noelle Russell", "ref": "Other", "date": "2026-09-18"}, {"name": "Dallas Burt", "ref": "Other", "date": "2026-09-18"}, {"name": "Ywanda Ndiaye", "ref": "Ty Woods", "date": "2026-09-18"}, {"name": "Michelle Evans", "ref": "Ericka James", "date": "2026-09-18"}, {"name": "Rose Kramer", "ref": "Other", "date": "2026-09-18"}, {"name": "Ebonee Robinson", "ref": "Other", "date": "2026-09-18"}, {"name": "Norman Miller", "ref": "Not specified", "date": "2026-09-18"}, {"name": "Ed Carter", "ref": "Other", "date": "2026-09-18"}, {"name": "Miranda Baldridge", "ref": "Other", "date": "2026-09-18"}, {"name": "Shalom Mascarinas", "ref": "Other", "date": "2026-09-18"}, {"name": "Shannon Alexander", "ref": "Other", "date": "2026-09-18"}, {"name": "Bryan Messick", "ref": "Other", "date": "2026-09-18"}, {"name": "Robert Szafarowicz", "ref": "Other", "date": "2026-09-18"}, {"name": "James Wilson", "ref": "Other", "date": "2026-09-18"}, {"name": "Erica Wright", "ref": "Other", "date": "2026-09-18"}, {"name": "Christina Wheeler Wellman", "ref": "Other", "date": "2026-09-18"}, {"name": "Jolanta Ozatalay", "ref": "Other", "date": "2026-09-18"}, {"name": "Theresa Pugh", "ref": "Other", "date": "2026-09-18"}, {"name": "Attila Molnár", "ref": "Other", "date": "2026-09-18"}, {"name": "rebecca oliver", "ref": "Other", "date": "2026-09-18"}, {"name": "Joni Collins", "ref": "Other", "date": "2026-09-18"}, {"name": "Avis Renae Duncan", "ref": "Other", "date": "2026-09-18"}, {"name": "Eric Young", "ref": "Other", "date": "2026-09-18"}, {"name": "Nydia Guity", "ref": "Aprille Franks", "date": "2026-09-18"}, {"name": "Trena Cook", "ref": "Other", "date": "2026-09-18"}, {"name": "Crystal Franklin", "ref": "Other", "date": "2026-09-18"}, {"name": "Denis O'Donovan", "ref": "Other", "date": "2026-09-18"}, {"name": "Tamairo Moutry", "ref": "Other", "date": "2026-09-18"}, {"name": "Taylor Kohn", "ref": "Not specified", "date": "2026-09-18"}, {"name": "Dudley Jennings", "ref": "Other", "date": "2026-09-18"}, {"name": "Shamire Badillo", "ref": "Other", "date": "2026-09-18"}, {"name": "Tonya Becker", "ref": "Other", "date": "2026-09-18"}, {"name": "Anna Christine Boulier", "ref": "Buffy Payne", "date": "2026-09-18"}, {"name": "Marcia Bayne", "ref": "Not specified", "date": "2026-09-18"}, {"name": "Dr M N", "ref": "Aprille Franks", "date": "2026-09-18"}, {"name": "Jacqueline Jeter", "ref": "Aprille Franks", "date": "2026-09-18"}, {"name": "Rose Davis", "ref": "Not specified", "date": "2026-09-17"}, {"name": "ALmane Wimberly", "ref": "Other", "date": "2026-09-17"}, {"name": "Dominique Palmer", "ref": "Aprille Franks", "date": "2026-09-17"}, {"name": "Walker French", "ref": "Other", "date": "2026-09-17"}, {"name": "Carl Gordon", "ref": "Other", "date": "2026-09-17"}, {"name": "Paul Blumsack", "ref": "Buffy Payne", "date": "2026-09-17"}, {"name": "Me Me", "ref": "Aprille Franks", "date": "2026-09-17"}, {"name": "Crystal Harkless", "ref": "Other", "date": "2026-09-17"}, {"name": "Carmela Jonah", "ref": "Aprille Franks", "date": "2026-09-17"}, {"name": "Stephanie Coradin", "ref": "Not specified", "date": "2026-09-17"}, {"name": "Kimberly Joy", "ref": "Buffy Payne", "date": "2026-09-17"}, {"name": "Nicki Bland", "ref": "Other", "date": "2026-09-17"}, {"name": "Lisa R", "ref": "Aprille Franks", "date": "2026-09-17"}, {"name": "Benjamin Tuinei", "ref": "Buffy Payne", "date": "2026-09-17"}, {"name": "Raul Crespo", "ref": "Buffy Payne", "date": "2026-09-17"}, {"name": "Patricia Wenck", "ref": "Buffy Payne", "date": "2026-09-17"}, {"name": "Debra Benson", "ref": "Aprille Franks", "date": "2026-09-17"}, {"name": "Tami Smith", "ref": "Aprille Franks", "date": "2026-09-17"}, {"name": "Paula Milner", "ref": "Aprille Franks", "date": "2026-09-17"}, {"name": "Angela Pubien", "ref": "Aprille Franks", "date": "2026-09-17"}, {"name": "Missa Peters", "ref": "Aprille Franks", "date": "2026-09-16"}, {"name": "Shannon Adams", "ref": "Aprille Franks", "date": "2026-09-16"}, {"name": "Brooke Summer", "ref": "Aprille Franks", "date": "2026-09-16"}, {"name": "Jayda Sanders", "ref": "Ty Woods", "date": "2026-09-16"}, {"name": "Alessia Tenebruso", "ref": "Aprille Franks", "date": "2026-09-16"}, {"name": "Maria Franco", "ref": "Other", "date": "2026-09-16"}, {"name": "Glory T", "ref": "Other", "date": "2026-09-16"}, {"name": "Debra Cotton", "ref": "Aprille Franks", "date": "2026-09-16"}, {"name": "Lauren Gray", "ref": "Aprille Franks", "date": "2026-09-16"}, {"name": "Kerie-Ann Lawrence", "ref": "Aprille Franks", "date": "2026-09-16"}, {"name": "Angela Watson", "ref": "Aprille Franks", "date": "2026-09-16"}, {"name": "Laura Williams", "ref": "Aprille Franks", "date": "2026-09-16"}, {"name": "Sean Blackmore", "ref": "Other", "date": "2026-09-16"}, {"name": "Cheryl Matthews", "ref": "Aprille Franks", "date": "2026-09-16"}, {"name": "Cheryl Matthews", "ref": "Not specified", "date": "2026-09-16"}, {"name": "Kethney M", "ref": "Ty Woods", "date": "2026-09-16"}, {"name": "Bonnie Franklin", "ref": "Ty Woods", "date": "2026-09-16"}, {"name": "Laura Dahl", "ref": "Sherri Parsons", "date": "2026-09-16"}, {"name": "Elly Mia", "ref": "Other", "date": "2026-09-16"}, {"name": "Daphne Williams", "ref": "Ty Woods", "date": "2026-09-16"}, {"name": "Cishawn Randolph", "ref": "Other", "date": "2026-09-16"}, {"name": "matt payne", "ref": "Buffy Payne", "date": "2026-09-16"}, {"name": "Nisha Jackson", "ref": "Aprille Franks", "date": "2026-09-16"}, {"name": "Liz Merriwether", "ref": "Aprille Franks", "date": "2026-09-16"}, {"name": "Charlene Montgomery", "ref": "Aprille Franks", "date": "2026-09-16"}, {"name": "Rajesh Sahni", "ref": "Other", "date": "2026-09-16"}, {"name": "Ve Lewis", "ref": "Ty Woods", "date": "2026-09-16"}, {"name": "Elou Xu", "ref": "Not specified", "date": "2026-09-16"}, {"name": "Renata Lewis", "ref": "Other", "date": "2026-09-16"}, {"name": "Eboni Porter", "ref": "Other", "date": "2026-09-16"}, {"name": "A Beale", "ref": "Not specified", "date": "2026-09-16"}, {"name": "Lyndall Jacobs", "ref": "Sherri Parsons", "date": "2026-09-15"}, {"name": "Carol Rodarte Wilson", "ref": "Ty Woods", "date": "2026-09-15"}, {"name": "Paul Dendle", "ref": "Ericka James", "date": "2026-09-15"}, {"name": "Eva Abdelmessiah", "ref": "Other", "date": "2026-09-15"}, {"name": "Maria Davis-Pierre", "ref": "Aprille Franks", "date": "2026-09-15"}, {"name": "Marius Urzica", "ref": "Other", "date": "2026-09-15"}, {"name": "Liat Benzur", "ref": "Other", "date": "2026-09-15"}, {"name": "Erica Stepney", "ref": "Ty Woods", "date": "2026-09-15"}, {"name": "Audra Lowray", "ref": "Aprille Franks", "date": "2026-09-15"}, {"name": "Crystal Mata", "ref": "Other", "date": "2026-09-15"}, {"name": "Pamela Pujo", "ref": "Not specified", "date": "2026-09-15"}, {"name": "A P", "ref": "Other", "date": "2026-09-15"}, {"name": "Virginia Boykin", "ref": "Ty Woods", "date": "2026-09-15"}, {"name": "Phyllis Horton", "ref": "Other", "date": "2026-09-15"}, {"name": "Christina Williams", "ref": "Other", "date": "2026-09-15"}, {"name": "Ray Zoller", "ref": "Other", "date": "2026-09-15"}, {"name": "Miranda McCray", "ref": "Other", "date": "2026-09-15"}, {"name": "Glenn Ford", "ref": "Buffy Payne", "date": "2026-09-15"}, {"name": "Jeff Martin", "ref": "Other", "date": "2026-09-15"}, {"name": "Tim Genster", "ref": "Ty Woods", "date": "2026-09-15"}, {"name": "Kali Shelton", "ref": "Aprille Franks", "date": "2026-09-15"}, {"name": "Dave Bruce", "ref": "Ty Woods", "date": "2026-09-15"}, {"name": "Alice C", "ref": "Other", "date": "2026-09-15"}, {"name": "brian garrett", "ref": "Other", "date": "2026-09-15"}, {"name": "Paul Grogan", "ref": "Other", "date": "2026-09-15"}, {"name": "Masoud Ahangar", "ref": "Other", "date": "2026-09-15"}, {"name": "Cicely Mason", "ref": "Sherri Parsons", "date": "2026-09-15"}, {"name": "Kathy Nelson", "ref": "Not specified", "date": "2026-09-15"}, {"name": "Rhonda Genesis", "ref": "Ty Woods", "date": "2026-09-15"}, {"name": "Janay Trevillion", "ref": "Other", "date": "2026-09-15"}, {"name": "Kenneth Collins", "ref": "Other", "date": "2026-09-15"}, {"name": "Jason Stricevich", "ref": "Other", "date": "2026-09-15"}, {"name": "Jason Reuter", "ref": "Other", "date": "2026-09-15"}, {"name": "Adolfo Cevallos", "ref": "Other", "date": "2026-09-15"}, {"name": "Edward Welch", "ref": "Other", "date": "2026-09-15"}, {"name": "Kobina de Graft Johnson", "ref": "Other", "date": "2026-09-15"}, {"name": "Chris Woods", "ref": "Ty Woods", "date": "2026-09-15"}, {"name": "Anthony Sarkis", "ref": "Other", "date": "2026-09-15"}, {"name": "Michelle Vogtman", "ref": "Other", "date": "2026-09-15"}, {"name": "Scott Carpenter", "ref": "Other", "date": "2026-09-15"}, {"name": "John Reed", "ref": "Other", "date": "2026-09-15"}, {"name": "Nicole Allen", "ref": "Not specified", "date": "2026-09-15"}, {"name": "Ken Adams", "ref": "Not specified", "date": "2026-09-15"}, {"name": "John Polidan", "ref": "Other", "date": "2026-09-15"}, {"name": "Terry Tribble", "ref": "Other", "date": "2026-09-15"}, {"name": "Mitch Roberts", "ref": "Other", "date": "2026-09-15"}, {"name": "Kyle Weiss", "ref": "Other", "date": "2026-09-15"}, {"name": "Joseph Rodriguez", "ref": "Other", "date": "2026-09-15"}, {"name": "Iverson Harris", "ref": "Ty Woods", "date": "2026-09-15"}, {"name": "Sonya R.", "ref": "Aprille Franks", "date": "2026-09-15"}, {"name": "Anna Jackson", "ref": "Aprille Franks", "date": "2026-09-15"}, {"name": "Kimberly Fennell", "ref": "Ty Woods", "date": "2026-09-15"}, {"name": "Pamela Marjorie Wakefield", "ref": "Aprille Franks", "date": "2026-09-15"}, {"name": "Claytonia Woods", "ref": "Aprille Franks", "date": "2026-09-15"}, {"name": "Cheryl Tibbs", "ref": "Sherri Parsons", "date": "2026-09-15"}, {"name": "Jorge Orenday", "ref": "Other", "date": "2026-09-15"}, {"name": "Hilda Culbertson", "ref": "Ty Woods", "date": "2026-09-15"}, {"name": "Jacqueline Evans", "ref": "Sherri Parsons", "date": "2026-09-15"}, {"name": "Dena Bruton", "ref": "Aprille Franks", "date": "2026-09-15"}, {"name": "Rachel McClinton", "ref": "Aprille Franks", "date": "2026-09-15"}, {"name": "Jenine Lowery", "ref": "Aprille Franks", "date": "2026-09-15"}, {"name": "Andrew Latessa", "ref": "Buffy Payne", "date": "2026-09-15"}, {"name": "Allegra Bey", "ref": "Aprille Franks", "date": "2026-09-15"}, {"name": "Alesha Smith", "ref": "Aprille Franks", "date": "2026-09-15"}, {"name": "Sharon Brown", "ref": "Aprille Franks", "date": "2026-09-15"}, {"name": "Jacquelin Finnicum", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Cheray Diggs", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Tricia Sauer", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Adrien Wilson", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Dianne Kelly", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Lisa B", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Dana Gathers", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Darlene Thorne", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Delores Jones", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Renee Galloway", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Jeni Chaffer", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Ericka Cherrie", "ref": "Other", "date": "2026-09-14"}, {"name": "Marcita Spencer", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Lyn Williams", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Tabitha Babbs", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Katrina Allen", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Ingrid Pickett", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Amina Carter", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Heston Roberts", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Rhonda Mattox", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "David Zarate", "ref": "Other", "date": "2026-09-14"}, {"name": "Carla Smith", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Marnae Greenhill", "ref": "Ericka James", "date": "2026-09-14"}, {"name": "Regina Buckley", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Darlene H", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Rita Hernandez", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Valencia Renae", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Dante Hardin", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Juanita Foster", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Andria C", "ref": "Other", "date": "2026-09-14"}, {"name": "Pure Love", "ref": "Other", "date": "2026-09-14"}, {"name": "Sandra Chaney", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Kimberly Branch", "ref": "Other", "date": "2026-09-14"}, {"name": "Marquita Cooper", "ref": "Ty Woods", "date": "2026-09-14"}, {"name": "Christal Smith", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Awnica Browne", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Tiffany Mack-Mohammed", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "LáShaun Brown-Glenn", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Kim Arrington", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Sylvia Green", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Crystal Coleman", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Nia Leak", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Jennifer Clark", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Tomesia Ingram", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Twyla Williams", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Cathy Anderson", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Brooke-Sidney Harbour", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Dee Taft", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Chedza Mudongo", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Trina House", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Michelle Delattiboudare", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Arylle Young", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "April Ruffin", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Atiya Brown", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Bruce Serrano", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Vandolyn Smith", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Heather Caudill", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Davelle Davis", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Ginger Simms", "ref": "Buffy Payne", "date": "2026-09-14"}, {"name": "Sharon Harrell", "ref": "Ty Woods", "date": "2026-09-14"}, {"name": "Josette Mills", "ref": "Aprille Franks", "date": "2026-09-14"}, {"name": "Matt McCarthy", "ref": "Buffy Payne", "date": "2026-09-14"}, {"name": "shannon michael", "ref": "Buffy Payne", "date": "2026-09-14"}, {"name": "Susan Gogley", "ref": "Buffy Payne", "date": "2026-09-14"}, {"name": "Dayra Gamiño", "ref": "Other", "date": "2026-09-14"}]};</script>
+<script>
+(() => {
+  const {people, updated} = window.REG_DATA;
+  const UNPARTNERED = ["Other", "Not specified"];
+  const $ = id => document.getElementById(id);
+  let active = null;
+
+  // theme: always opens light, dark only via toggle
+  const root = document.documentElement;
+  $("theme").onclick = () => {
+    const dark = root.dataset.theme !== "dark";
+    root.dataset.theme = dark ? "dark" : "light";
+    $("theme").textContent = dark ? "Light mode" : "Dark mode";
+  };
+
+  const groups = {};
+  people.forEach(p => (groups[p.ref] ||= []).push(p));
+  Object.values(groups).forEach(g => g.sort((a, b) => b.date.localeCompare(a.date) || a.name.localeCompare(b.name)));
+  const order = Object.keys(groups).sort((a, b) => {
+    const ua = UNPARTNERED.includes(a), ub = UNPARTNERED.includes(b);
+    if (ua !== ub) return ua ? 1 : -1;
+    return groups[b].length - groups[a].length || a.localeCompare(b);
+  });
+  const partners = order.filter(r => !UNPARTNERED.includes(r));
+  const total = people.length;
+  const max = Math.max(...order.map(r => groups[r].length));
+
+  $("total").textContent = total;
+  $("referred").textContent = partners.reduce((s, r) => s + groups[r].length, 0);
+  $("partners").textContent = partners.length;
+  const fmt = d => new Date(d + "T12:00:00").toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric"});
+  $("updated").textContent = "Updated " + fmt(updated);
+
+  const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+  function renderBoard() {
+    let rank = 0, html = "", dividerDone = false;
+    for (const r of order) {
+      const n = groups[r].length, muted = UNPARTNERED.includes(r);
+      if (muted && !dividerDone) { html += '<div class="divider"></div>'; dividerDone = true; }
+      html += `<button type="button" class="row${muted ? " muted" : ""}${active === r ? " active" : ""}" data-ref="${esc(r)}">
+        <span class="rank">${muted ? "" : ++rank}</span>
+        <span class="who">${esc(r)}</span>
+        <span class="bar"><i style="width:${(n / max * 100).toFixed(1)}%"></i></span>
+        <span class="cnt">${n}<small>${(n / total * 100).toFixed(0)}%</small></span>
+      </button>`;
+    }
+    $("board").innerHTML = html;
+    $("board").querySelectorAll(".row").forEach(b => b.onclick = () => {
+      active = active === b.dataset.ref ? null : b.dataset.ref;
+      render();
+      if (active) $("list").scrollIntoView({behavior: "smooth", block: "start"});
+    });
+  }
+
+  function renderList() {
+    const q = $("q").value.trim().toLowerCase();
+    let html = "";
+    for (const r of order) {
+      if (active && r !== active) continue;
+      const list = groups[r].filter(p => !q || p.name.toLowerCase().includes(q));
+      if (!list.length) continue;
+      html += `<div class="card group"><div class="ghead"><h3>${esc(r)}</h3><span>${list.length}${q ? " of " + groups[r].length : ""} registrant${groups[r].length === 1 ? "" : "s"}</span></div>
+        <ol class="people">${list.map(p => `<li><b>${esc(p.name)}</b><em>${fmt(p.date).replace(/, \d{4}$/, "")}</em></li>`).join("")}</ol></div>`;
+    }
+    $("list").innerHTML = html || '<div class="card empty">No registrants match that search.</div>';
+    $("clear").hidden = !active;
+  }
+
+  function render() { renderBoard(); renderList(); }
+  $("q").oninput = renderList;
+  $("clear").onclick = () => { active = null; render(); };
+  render();
+})();
+</script>
+</body>
+</html>
