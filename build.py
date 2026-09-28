@@ -6,6 +6,7 @@ Only names, referrer and signup date are published. Emails and phones never leav
 import csv, json, re, sys, datetime
 
 EXCLUDE_EMAILS = {"jesus@marblism.com"}  # internal test signups
+RENAME = {"Other": "Marblism Team (Mateo, Lake, Malo)"}  # "Other" in the form means our own team
 
 src = sys.argv[1] if len(sys.argv) > 1 else ".registrations.csv"
 people = []
@@ -18,7 +19,7 @@ with open(src, newline="", encoding="utf-8-sig") as f:
         name = " ".join(w if not w.isupper() or len(w) < 3 else w.title() for w in f"{first} {last}".split() if "@" not in w) or "Name withheld"
         people.append({
             "name": name,
-            "ref": r["Who Referred You?"].strip() or "Not specified",
+            "ref": RENAME.get(r["Who Referred You?"].strip(), r["Who Referred You?"].strip()) or "Not specified",
             "date": r["createdAt"].strip()[:10],
         })
 
