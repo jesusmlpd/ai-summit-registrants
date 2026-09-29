@@ -5,7 +5,7 @@ Only names, referrer and signup date are published. Emails and phones never leav
 """
 import csv, json, re, sys, datetime
 
-EXCLUDE_EMAILS = {"jesus@marblism.com"}  # internal test signups
+EXCLUDE_EMAILS = {"jesus@marblism.com"}  # internal test signups; every status (registered, live, on-demand) counts
 RENAME = {"Other": "Marblism Team (Mateo, Lake, Malo)"}  # "Other" in the form means our own team
 
 src = sys.argv[1] if len(sys.argv) > 1 else ".registrations.csv"
@@ -13,7 +13,7 @@ people = []
 with open(src, newline="", encoding="utf-8-sig") as f:
     for r in csv.DictReader(f):
         email = r["email"].strip().lower()
-        if email in EXCLUDE_EMAILS or r["status"].strip() != "registered":
+        if email in EXCLUDE_EMAILS:
             continue
         first, last = r["firstName"].strip(), r["lastName"].strip()
         name = " ".join(w if not w.isupper() or len(w) < 3 else w.title() for w in f"{first} {last}".split() if "@" not in w) or "Name withheld"
